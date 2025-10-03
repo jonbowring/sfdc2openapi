@@ -1,0 +1,1425 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Lightning Platform REST API",
+    "description": "REST API provides you with programmatic access to your data in Salesforce. The flexibility and scalability of REST API make it an excellent choice for integrating Salesforce into your applications and for performing complex operations on a large scale. You can use REST API tools to create, manipulate, and search data in Salesforce by sending HTTP requests to endpoints in Salesforce. Depending on where you send requests, you access and operate on different pieces of information, called resources. Resources include records, query results, metadata, and more. ",
+    "version": "64.0"
+  },
+  "servers": [
+    {
+      "url": "https://factdata-dev-ed.develop.my.salesforce.com/services/data/v64.0"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    },
+    {
+      "oAuth2": []
+    },
+    {
+      "openIDConnectDiscovery": []
+    }
+  ],
+  "paths": {
+    "/query": {
+      "description": "Executes the specified SOQL query.",
+      "get": {
+        "operationId": "query",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "A SOQL query. To create a valid URI, replace spaces in the query string with a plus sign + or with %20. For example: SELECT+Name+FROM+MyObject. If the SOQL query string is invalid, a MALFORMED_QUERY response is returned. A required query parameter.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sforce-Query-Options",
+            "in": "header",
+            "description": "An optional header specifying the batch size. Batch size is a numeric value that specifies the number of records returned for a query request. Child objects count toward the number of records for the batch size. For example, in relationship queries, multiple child objects are returned per parent row returned. The default is 2,000; the minimum is 200, and the maximum is 2,000. There is no guarantee that the requested batch size is the actual batch size. Changes are made as necessary to maximize performance. The format is batchSize=XXXX. For example: Sforce-Query-Options: batchSize=1000.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Status Code 400",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Status Code 401",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Status Code 403",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Status Code 404",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Status Code 500",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Status Code 405",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Status Code 503",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Status Code 200",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryResult"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Status Code 412",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-sfdc": {
+        "api-sub-domain": "SObjects",
+        "api-domain": "Platform"
+      }
+    },
+    "/sobjects/{sObject}": {
+      "description": "Describes the individual metadata for the specified object. Can also be used to create a new record for a given object. For example, this can be used to retrieve the metadata for the Account object using the GET method, or create a new Account object using the POST method.",
+      "get": {
+        "operationId": "getSObjectMetadata",
+        "parameters": [
+          {
+            "name": "sObject",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SObjectType"
+            }
+          }
+        ],
+        "responses": {
+          "304": {
+            "description": "Status Code 304",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Status Code 400",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Status Code 401",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Status Code 403",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Status Code 404",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Status Code 500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Status Code 405",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Status Code 503",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Status Code 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SObjectRootInfo"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Status Code 412",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createSObject",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "An optional header, which can only be used with POST, specifying the format for the request and response. Possible choices are: Content-Type: application/json Content-Type: application/xml",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sObject",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SObjectType"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SObject"
+              },
+              "examples": {
+                "Account": {
+                  "summary": "Account Example",
+                  "value": {
+                    "Name": "Test Account",
+                    "apiSObjectType": "Account"
+                  }
+                },
+                "Contact": {
+                  "summary": "Contact Example",
+                  "value": {
+                    "FirstName": "Some",
+                    "LastName": "Name",
+                    "apiSObjectType": "Contact"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Status Code 400",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Status Code 401",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Status Code 403",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Status Code 404",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Status Code 500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Status Code 405",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Status Code 503",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Status Code 201",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaveResult"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Status Code 415",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-sfdc": {
+        "api-sub-domain": "SObjects",
+        "api-domain": "Platform"
+      }
+    },
+    "/sobjects/{sObject}/{id}": {
+      "description": "Accesses records based on the specified object ID. Retrieves, updates, or deletes records. This resource can also be used to retrieve field values. Use the GET method to retrieve records or fields, the DELETE method to delete records, and the PATCH method to update records.",
+      "get": {
+        "operationId": "getSObject",
+        "parameters": [
+          {
+            "name": "sObject",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SObjectType"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The identifier of the object. For example, 001R0000005hDFYIA2. A required path parameter for all methods (GET, PATCH, and DELETE).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma-delimited list of fields to get values for. For example, ?fields=name,description,numberofemployees,industry. An optional query parameter that can only be used with GET.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "If-Modified-Since",
+            "in": "header",
+            "description": "An optional header specifying a date and time. The request returns records that have been modified after that date and time. The format is EEE, dd MMM yyyy HH:mm:ss z For example: If-Modified-Since: Mon, 30 Nov 2020 08:34:54 MST.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "If-Unmodified-Since",
+            "in": "header",
+            "description": "An optional header specifying a date and time. The request returns records that have not been modified after that date and time. The format is EEE, dd MMM yyyy HH:mm:ss z For example: If-Unmodified-Since: Mon, 30 Nov 2020 08:34:54 MST.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "description": "An optional header specifying a comma-delimited list of one or more ETags. This only has an effect when used with Account objects. The request is only processed if the Account’s ETag matches one of the ETags in the list. For example: If-Match: \"94C83JSreaVMGpL+lUzv8Dr3inI0kCvuKATVJcTuApA=--gzip\", \"ddpAdaTHz+GcV35e7NLJ9iKD3XXVqAzXT1Sl2ykkP7g=--gzip\".",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "If-None-Match",
+            "in": "header",
+            "description": "An optional header specifying a comma-delimited list of one or more ETags. This only has an effect when used with Account objects. The request is only processed if the Account’s ETag does not match one of the ETags in the list. For example: If-None-Match: \"94C83JSreaVMGpL+lUzv8Dr3inI0kCvuKATVJcTuApA=--gzip\", \"ddpAdaTHz+GcV35e7NLJ9iKD3XXVqAzXT1Sl2ykkP7g=--gzip\".",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "304": {
+            "description": "Status Code 304",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Status Code 400",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Status Code 401",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Status Code 403",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Status Code 404",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Status Code 500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Status Code 405",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Status Code 503",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Status Code 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SObject"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Status Code 412",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteSObject",
+        "parameters": [
+          {
+            "name": "sObject",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SObjectType"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The identifier of the object. For example, 001R0000005hDFYIA2. A required path parameter for all methods (GET, PATCH, and DELETE).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Status Code 400",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Status Code 401",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Status Code 403",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Status Code 404",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Status Code 500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Status Code 405",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Status Code 503",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Status Code 204"
+          },
+          "415": {
+            "description": "Status Code 415",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateSObject",
+        "parameters": [
+          {
+            "name": "sObject",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SObjectType"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The identifier of the object. For example, 001R0000005hDFYIA2. A required path parameter for all methods (GET, PATCH, and DELETE).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "An optional header, which can only be used with PATCH, specifying the format for the request and response. Possible choices are: Content-Type: application/json Content-Type: application/xml",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SObject"
+              },
+              "examples": {
+                "Account": {
+                  "summary": "Account Example",
+                  "value": {
+                    "Name": "Test Account",
+                    "apiSObjectType": "Account"
+                  }
+                },
+                "Contact": {
+                  "summary": "Contact Example",
+                  "value": {
+                    "FirstName": "Some",
+                    "LastName": "Name",
+                    "apiSObjectType": "Contact"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Status Code 400",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Status Code 401",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Status Code 403",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Status Code 404",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Status Code 500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Status Code 405",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Status Code 503",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestApiError"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Status Code 204"
+          },
+          "415": {
+            "description": "Status Code 415",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ErrorInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-sfdc": {
+        "api-sub-domain": "SObjects",
+        "api-domain": "Platform"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorInfo": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "extendedErrorDetails": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "extendedErrorCode": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QueryResult": {
+        "type": "object",
+        "properties": {
+          "totalSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "done": {
+            "type": "boolean"
+          },
+          "nextRecordsUrl": {
+            "type": "string"
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "RestApiError": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "SObject": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "apiSObjectType": {
+            "type": "string",
+            "description": "The type of the current sObject, used as a discriminator for OAS tooling."
+          },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "readOnly": true
+          }
+        },
+        "discriminator": {
+          "propertyName": "apiSObjectType"
+        }
+      },
+      "SObjectRootInfo": {
+        "type": "object",
+        "properties": {
+          "recentItems": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "objectDescribe": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "labelPlural": {
+                "type": "string"
+              },
+              "keyPrefix": {
+                "type": "string"
+              },
+              "custom": {
+                "type": "boolean"
+              },
+              "customSetting": {
+                "type": "boolean"
+              },
+              "activateable": {
+                "type": "boolean"
+              },
+              "createable": {
+                "type": "boolean"
+              },
+              "updateable": {
+                "type": "boolean"
+              },
+              "deletable": {
+                "type": "boolean"
+              },
+              "undeletable": {
+                "type": "boolean"
+              },
+              "mergeable": {
+                "type": "boolean"
+              },
+              "replicateable": {
+                "type": "boolean"
+              },
+              "triggerable": {
+                "type": "boolean"
+              },
+              "queryable": {
+                "type": "boolean"
+              },
+              "retrieveable": {
+                "type": "boolean"
+              },
+              "searchable": {
+                "type": "boolean"
+              },
+              "layoutable": {
+                "type": "boolean"
+              },
+              "feedEnabled": {
+                "type": "boolean"
+              },
+              "mruEnabled": {
+                "type": "boolean"
+              },
+              "hasSubtypes": {
+                "type": "boolean"
+              },
+              "isSubtype": {
+                "type": "boolean"
+              },
+              "dataTranslationEnabled": {
+                "type": "boolean"
+              },
+              "isInterface": {
+                "type": "boolean"
+              },
+              "deepCloneable": {
+                "type": "boolean"
+              },
+              "associateEntityType": {
+                "type": "string"
+              },
+              "associateParentEntity": {
+                "type": "string"
+              },
+              "urls": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "deprecatedAndHidden": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "SObjectType": {
+        "type": "string",
+        "enum": [
+          "Account"
+        ]
+      },
+      "SaveResult": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "statusCode": {
+                  "type": "string"
+                },
+                "extendedErrorDetails": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "extendedErrorCode": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "statusCode": {
+                  "type": "string"
+                },
+                "extendedDetails": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "extendedErrorCode": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "infos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "statusCode": {
+                  "type": "string"
+                },
+                "extendedDetails": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "extendedErrorCode": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "openIDConnectDiscovery": {
+        "type": "openIdConnect",
+        "openIdConnectUrl": "https://login.salesforce.com/.well-known/openid-configuration"
+      },
+      "bearerAuth": {
+        "type": "http",
+        "description": "Use Session Id or Access Token as valid bearer token to authenticate with Salesforce. Access Token could be retrieved via any supported OAuth2 flows listed or not listed here (e.g. JWT Bearer Token Flow).To obtain a session ID, you can use the SOAP API login() call or through the Salesforce CLI.",
+        "scheme": "bearer"
+      },
+      "oAuth2": {
+        "type": "oauth2",
+        "description": "For more information on all supported OAuth Flows, please see 'https://help.salesforce.com/articleView?id=remoteaccess_oauth_flows.htm&type=5'. For more information on all available scope options, please see 'https://help.salesforce.com/articleView?id=remoteaccess_oauth_tokens_scopes.htm&type=5#oauth_scopes'. ",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://login.salesforce.com/services/oauth2/authorize",
+            "scopes": {
+              "visualforce": "Allows access to customer-created Visualforce pages only. This scope doesn’t allow access to standard Salesforce UIs.",
+              "address": "Allows access to the identity URL service. You can request profile, email, address, or phone individually to get the same result as using id; they are all synonymous.",
+              "custom_permissions": "Allows access to the custom permissions in an org associated with the connected app. This scope also shows whether the current user has each permission enabled.",
+              "openid": "Allows access to the current, logged in user’s unique identifier for OpenID Connect apps. In the OAuth 2.0 user-agent flow and the OAuth 2.0 web server flow, use the openid scope. In addition to the access token, this scope enables you to receive a signed ID token that conforms to the OpenID Connect specifications.",
+              "profile": "Allows access to the identity URL service. You can request profile, email, address, or phone individually to get the same result as using id; they are all synonymous.",
+              "refresh_token": "Allows a refresh token to be returned when the requesting client is eligible to receive one. With a refresh token, the app can interact with the user’s data while the user is offline. This token is synonymous with requesting offline_access.",
+              "wave_api": "Access and manage your Wave data.",
+              "web": "Allows use of the access_token on the web. This scope also includes visualforce, allowing access to customer-created Visualforce pages.",
+              "phone": "Allows access to the identity URL service. You can request profile, email, address, or phone individually to get the same result as using id; they are all synonymous.",
+              "offline_access": "Allows a refresh token to be returned when the requesting client is eligible to receive one. With a refresh token, the app can interact with the user’s data while the user is offline. This token is synonymous with requesting offline_access.",
+              "chatter_api": "Allows access to Connect REST API resources on behalf of the user.",
+              "id": "Allows access to the identity URL service. You can request profile, email, address, or phone individually to get the same result as using id; they are all synonymous.",
+              "api": "Allows access to the current, logged-in user’s account using APIs, such as REST API and Bulk API. This scope also includes chatter_api, which allows access to Connect REST API resources.",
+              "eclair_api": "Access and manage your Eclair data.",
+              "email": "Allows access to the identity URL service. You can request profile, email, address, or phone individually to get the same result as using id; they are all synonymous.",
+              "pardot_api": "Allows access to Pardot API services on behalf of the user. Manage the full extent of accessible services in Pardot.",
+              "full": "Allows access to all data accessible by the logged-in user, and encompasses all other scopes. full doesn’t return a refresh token. You must explicitly request the refresh_token scope to get a refresh token."
+            }
+          },
+          "password": {
+            "tokenUrl": "https://login.salesforce.com/services/oauth2/token",
+            "scopes": {
+              "api": "Allows access to the current, logged-in user’s account using APIs, such as REST API and Bulk API. This scope also includes chatter_api, which allows access to Connect REST API resources."
+            }
+          },
+          "authorizationCode": {
+            "authorizationUrl": "https://login.salesforce.com/services/oauth2/authorize",
+            "tokenUrl": "https://login.salesforce.com/services/oauth2/token",
+            "scopes": {
+              "visualforce": "Allows access to customer-created Visualforce pages only. This scope doesn’t allow access to standard Salesforce UIs.",
+              "address": "Allows access to the identity URL service. You can request profile, email, address, or phone individually to get the same result as using id; they are all synonymous.",
+              "custom_permissions": "Allows access to the custom permissions in an org associated with the connected app. This scope also shows whether the current user has each permission enabled.",
+              "openid": "Allows access to the current, logged in user’s unique identifier for OpenID Connect apps. In the OAuth 2.0 user-agent flow and the OAuth 2.0 web server flow, use the openid scope. In addition to the access token, this scope enables you to receive a signed ID token that conforms to the OpenID Connect specifications.",
+              "profile": "Allows access to the identity URL service. You can request profile, email, address, or phone individually to get the same result as using id; they are all synonymous.",
+              "refresh_token": "Allows a refresh token to be returned when the requesting client is eligible to receive one. With a refresh token, the app can interact with the user’s data while the user is offline. This token is synonymous with requesting offline_access.",
+              "wave_api": "Access and manage your Wave data.",
+              "web": "Allows use of the access_token on the web. This scope also includes visualforce, allowing access to customer-created Visualforce pages.",
+              "phone": "Allows access to the identity URL service. You can request profile, email, address, or phone individually to get the same result as using id; they are all synonymous.",
+              "offline_access": "Allows a refresh token to be returned when the requesting client is eligible to receive one. With a refresh token, the app can interact with the user’s data while the user is offline. This token is synonymous with requesting offline_access.",
+              "chatter_api": "Allows access to Connect REST API resources on behalf of the user.",
+              "id": "Allows access to the identity URL service. You can request profile, email, address, or phone individually to get the same result as using id; they are all synonymous.",
+              "api": "Allows access to the current, logged-in user’s account using APIs, such as REST API and Bulk API. This scope also includes chatter_api, which allows access to Connect REST API resources.",
+              "eclair_api": "Access and manage your Eclair data.",
+              "email": "Allows access to the identity URL service. You can request profile, email, address, or phone individually to get the same result as using id; they are all synonymous.",
+              "pardot_api": "Allows access to Pardot API services on behalf of the user. Manage the full extent of accessible services in Pardot.",
+              "full": "Allows access to all data accessible by the logged-in user, and encompasses all other scopes. full doesn’t return a refresh token. You must explicitly request the refresh_token scope to get a refresh token."
+            }
+          }
+        }
+      }
+    }
+  }
+}

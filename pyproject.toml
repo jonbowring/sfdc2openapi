@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sfdc2openapi"
+version = "0.0.1"
+dependencies = [
+    "requests",
+    "click",
+    "pathlib",
+    "oauthlib",
+    "requests_oauthlib"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+sfdc2openapi = "sfdc2openapi.cli:main"
