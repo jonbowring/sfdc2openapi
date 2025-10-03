@@ -22,7 +22,7 @@ python -m build
     sfdc2openapi [OPTIONS] [ARGS]
 
 **Options:**
-
+```
   -d, --domain TEXT         Salesforce domain name to connect to.  [required]
   -v, --version TEXT        Salesforce API version (e.g. "v64.0").  [required]
   -o, --object TEXT         Salesforce object to include in the generated Open
@@ -39,6 +39,7 @@ python -m build
                             "SFDC_CLIENT_SECRET".
   -D, --debug               Flag to print debugging info to the terminal.
   --help                    Show this message and exit.
+```
 
 **Examples:**
 
