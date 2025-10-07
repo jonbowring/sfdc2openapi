@@ -75,7 +75,7 @@ class Utilities:
             'anyType': 'string',
             'calculated': 'string',
             'combobox': 'string',
-            'boolean': 'boolean',
+            'boolean': 'string',
             'currency': 'number',
             'date': 'string',
             'datetime': 'string',
